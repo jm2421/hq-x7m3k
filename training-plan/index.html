@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0e1116">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Training Plan</title>
+<style>
+  :root{
+    --bg:#0e1116; --card:#171c24; --card2:#1d242f; --border:#2a3240;
+    --text:#e8ecf1; --muted:#9aa5b1; --accent:#4cc38a; --blue:#5aa9e6;
+    --amber:#e6b455; --red:#e66a5a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    padding-bottom:40px;
+  }
+  .topbar{
+    position:sticky; top:0; z-index:20; background:rgba(14,17,22,.97);
+    backdrop-filter:blur(8px); border-bottom:1px solid var(--border);
+    padding-top:env(safe-area-inset-top);
+  }
+  .title-row{
+    max-width:760px; margin:0 auto; padding:14px 16px 8px;
+    display:flex; align-items:baseline; gap:10px;
+  }
+  .title-row h1{font-size:1.25rem;font-weight:800;letter-spacing:-.01em}
+  .title-row a{color:var(--muted);text-decoration:none;font-size:.85rem}
+  nav{
+    max-width:760px; margin:0 auto; display:flex; gap:6px; overflow-x:auto;
+    padding:4px 12px 10px; -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  }
+  nav::-webkit-scrollbar{display:none}
+  nav a{
+    flex:0 0 auto; padding:8px 14px; border-radius:999px; font-size:.9rem;
+    font-weight:600; color:var(--muted); text-decoration:none;
+    background:var(--card); border:1px solid var(--border); white-space:nowrap;
+  }
+  nav a.active{color:#0b0e12;background:var(--accent);border-color:var(--accent)}
+  main{max-width:760px;margin:0 auto;padding:18px 16px 0}
+  section{display:none}
+  section.visible{display:block;animation:fade .15s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  h2{font-size:1.45rem;font-weight:800;margin:6px 0 4px;letter-spacing:-.01em}
+  .lede{color:var(--muted);font-size:.95rem;line-height:1.5;margin-bottom:16px}
+  h3{font-size:1.05rem;font-weight:700;margin:22px 0 10px;color:var(--accent)}
+  h3.blue{color:var(--blue)}
+  p{line-height:1.55;font-size:.95rem}
+  .card{
+    background:var(--card); border:1px solid var(--border); border-radius:14px;
+    padding:14px 14px; margin-bottom:12px;
+  }
+  table{width:100%;border-collapse:collapse;font-size:.88rem}
+  th{text-align:left;color:var(--muted);font-weight:600;padding:6px 8px;border-bottom:1px solid var(--border);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+  td{padding:8px 8px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.4}
+  tr:last-child td{border-bottom:none}
+  tr.today td{background:rgba(76,195,138,.12)}
+  tr.today td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
+  .scrollx{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .block{
+    background:var(--card); border:1px solid var(--border); border-radius:14px;
+    margin-bottom:14px; overflow:hidden;
+  }
+  .block-head{
+    background:var(--card2); padding:10px 14px; font-size:.85rem; font-weight:700;
+  }
+  .block-head .rest{display:block;font-weight:500;color:var(--muted);font-size:.8rem;margin-top:2px}
+  .ex{
+    display:grid; grid-template-columns:34px 1fr auto; gap:4px 10px;
+    padding:11px 14px; border-top:1px solid var(--border); align-items:baseline;
+  }
+  .ex .tag{font-weight:800;color:var(--accent);font-size:.95rem}
+  .ex .name{font-weight:700;font-size:.98rem}
+  .ex .scheme{font-weight:700;font-size:.95rem;text-align:right;white-space:nowrap}
+  .ex .meta{grid-column:2/4;color:var(--muted);font-size:.83rem;line-height:1.4}
+  ul{list-style:none}
+  ul.rules li{
+    padding:10px 0 10px 18px; border-bottom:1px solid var(--border);
+    position:relative; line-height:1.5; font-size:.93rem;
+  }
+  ul.rules li::before{content:"\2022";color:var(--accent);position:absolute;left:2px;font-weight:800}
+  ul.rules li:last-child{border-bottom:none}
+  .note{
+    border-left:3px solid var(--amber); background:rgba(230,180,85,.08);
+    padding:10px 12px; border-radius:0 10px 10px 0; font-size:.9rem;
+    line-height:1.5; margin:12px 0; color:var(--text);
+  }
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.75rem;font-weight:700;letter-spacing:.02em}
+  .pill.g{background:rgba(76,195,138,.18);color:var(--accent)}
+  .pill.b{background:rgba(90,169,230,.18);color:var(--blue)}
+  .pill.a{background:rgba(230,180,85,.18);color:var(--amber)}
+  .pill.r{background:rgba(230,106,90,.18);color:var(--red)}
+  .max{color:var(--red);font-weight:800}
+  footer{max-width:760px;margin:28px auto 0;padding:0 16px;color:var(--muted);font-size:.78rem;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="title-row">
+    <h1>Training Plan</h1>
+    <a href="../">&larr; Health</a>
+  </div>
+  <nav id="nav">
+    <a href="#week">Week</a>
+    <a href="#squat">Squat Day</a>
+    <a href="#deadlift">Deadlift Day</a>
+    <a href="#cardio">Cardio</a>
+    <a href="#mobility">Mobility</a>
+    <a href="#rules">Rules</a>
+    <a href="#recovery">Recovery</a>
+    <a href="#testing">Benchmarks</a>
+  </nav>
+</div>
+
+<main>
+
+<!-- ============ WEEK ============ -->
+<section id="week">
+  <h2>The Weekly Schedule</h2>
+  <p class="lede">Same every week. Only the lift type on Mon / Wed / Sat rotates on the 2-week loop. 3 lifts/week, superset format, heavy hex dead + heavy belt squat, always separated.</p>
+
+  <div class="card scrollx">
+    <table id="weekTable">
+      <tr><th>Day</th><th>Morning</th><th>Training</th><th>Recovery</th><th>Evening</th></tr>
+      <tr data-day="1"><td><b>Mon</b></td><td>Primer</td><td>Mobility + <b>LIFT</b> (rotates)</td><td>Sauna</td><td>Ping pong / walk Badger</td></tr>
+      <tr data-day="2"><td><b>Tue</b></td><td>Primer</td><td><b>Norway 4&times;4</b></td><td>Sauna + cold plunge</td><td>Golf / walk Badger</td></tr>
+      <tr data-day="3"><td><b>Wed</b></td><td>Primer</td><td>Mobility + <b>LIFT</b> (rotates)</td><td>Sauna</td><td>Skate / walk Badger</td></tr>
+      <tr data-day="4"><td><b>Thu</b></td><td><b>Pickleball</b> (AM)</td><td>&mdash; rest from lifting/cardio</td><td>Light steam if desired</td><td>Surf or socialize / walk Badger</td></tr>
+      <tr data-day="5"><td><b>Fri</b></td><td>Primer</td><td><b>Norway 4&times;4</b> or golf-flex (rest)</td><td>Sauna + cold plunge</td><td>Golf / walk Badger</td></tr>
+      <tr data-day="6"><td><b>Sat</b></td><td>Primer</td><td>Mobility + <b>LIFT</b> (rotates)</td><td>Sauna</td><td>Paddleboard / walk Badger</td></tr>
+      <tr data-day="0"><td><b>Sun</b></td><td>Primer</td><td><b>REHIT</b> (10 min) + extended mobility</td><td>Contrast therapy</td><td>Socialize / walk Badger</td></tr>
+    </table>
+  </div>
+
+  <div class="note"><b>Friday rule:</b> Norway is the default. Playing golf that day? Drop the Norway and treat Friday as rest. Tue Norway + Sun REHIT still lands &mdash; minimum effective cardio dose holds.</div>
+
+  <h3>Lift Rotation (2-week loop)</h3>
+  <p class="lede" style="margin-bottom:10px">Six lifts per 14 days: 3 Discover Strength + 3 Home. Home sessions alternate <b>Squat / Deadlift strictly</b>, regardless of week.</p>
+  <div class="card scrollx">
+    <table>
+      <tr><th>Cycle</th><th>Monday</th><th>Wednesday</th><th>Saturday</th></tr>
+      <tr><td><b>Week A</b></td><td><span class="pill b">DS</span></td><td><span class="pill g">Home (S or D)</span></td><td><span class="pill b">DS</span></td></tr>
+      <tr><td><b>Week B</b></td><td><span class="pill g">Home (S or D)</span></td><td><span class="pill b">DS</span></td><td><span class="pill g">Home (S or D)</span></td></tr>
+    </table>
+  </div>
+  <p style="color:var(--muted);font-size:.88rem;line-height:1.5">Cycle 1 = S, D, S. Cycle 2 = D, S, D. Over 4 weeks: 3 Squat Days + 3 Deadlift Days. DS&rarr;DS gaps run 4&ndash;5 days; Squat Day and Deadlift Day are always &ge;5 days apart.</p>
+</section>
+
+<!-- ============ SQUAT DAY ============ -->
+<section id="squat">
+  <h2>Squat Day</h2>
+  <p class="lede">Heavy belt squat anchor &middot; 37 sets &middot; ~55 min. Belt squat capped at 200 lbs (current Voltra rig) &mdash; when sets feel easy, add tempo or 1&ndash;2 reps, no weight progression until the pulley upgrade.</p>
+
+  <div class="block">
+    <div class="block-head">BLOCK A &mdash; 2-ex superset &times; 4 rounds<span class="rest">Rest 2&ndash;3 min between rounds</span></div>
+    <div class="ex"><span class="tag">A1</span><span class="name">Belt Squat (Voltra cap)</span><span class="scheme">4 &times; 8</span><span class="meta">200 lbs &middot; 2 up / 3 down &middot; Rogue belt squat + Voltra</span></div>
+    <div class="ex"><span class="tag">A2</span><span class="name">Pull-ups</span><span class="scheme">4 &times; 6&ndash;8</span><span class="meta">BW &middot; 2 up / 3 down</span></div>
+  </div>
+
+  <div class="block">
+    <div class="block-head">BLOCK B &mdash; 3-ex triset &times; 3 rounds (leg pump)<span class="rest">Rest 90 sec between rounds</span></div>
+    <div class="ex"><span class="tag">B1</span><span class="name">Bulgarian Split Squat</span><span class="scheme">3 &times; 10/side</span><span class="meta">30 lb DBs &middot; 2 up / 2 down &middot; DBs + bench</span></div>
+    <div class="ex"><span class="tag">B2</span><span class="name">Voltra Leg Extension</span><span class="scheme">3 &times; 12</span><span class="meta">70 lbs &middot; controlled &middot; Voltra low + ankle strap</span></div>
+    <div class="ex"><span class="tag">B3</span><span class="name">Voltra Leg Curl</span><span class="scheme">3 &times; 12</span><span class="meta">30 lbs &middot; controlled &middot; Voltra low + ankle strap</span></div>
+  </div>
+
+  <div class="block">
+    <div class="block-head">BLOCK C &mdash; 2-ex superset &times; 4 rounds (push / pull)<span class="rest">Rest 90 sec between rounds</span></div>
+    <div class="ex"><span class="tag">C1</span><span class="name">Barbell Bench Press</span><span class="scheme">4 &times; 8</span><span class="meta">185 lbs &middot; 2 up / 3 down &middot; squat rack + plates</span></div>
+    <div class="ex"><span class="tag">C2</span><span class="name">Voltra Seated Row</span><span class="scheme">4 &times; 10</span><span class="meta">Moderate &middot; 2 up / 2 down &middot; Voltra low + handle</span></div>
+  </div>
+
+  <div class="block">
+    <div class="block-head">BLOCK D &mdash; 4-ex giant set &times; 3 rounds (arms / delts / core)<span class="rest">Rest 60 sec between rounds</span></div>
+    <div class="ex"><span class="tag">D1</span><span class="name">DB Lateral Raise</span><span class="scheme">3 &times; 15</span><span class="meta">10&ndash;12 lb DBs &middot; controlled</span></div>
+    <div class="ex"><span class="tag">D2</span><span class="name">DB Bicep Curl</span><span class="scheme">3 &times; 12</span><span class="meta">25 lb DBs &middot; controlled</span></div>
+    <div class="ex"><span class="tag">D3</span><span class="name">Voltra Tricep Pushdown</span><span class="scheme">3 &times; 12</span><span class="meta">Moderate &middot; controlled &middot; Voltra high + rope</span></div>
+    <div class="ex"><span class="tag">D4</span><span class="name">Toes to Bar</span><span class="scheme">3 &times; 8&ndash;10</span><span class="meta">BW &middot; controlled, no swing &middot; monkey bar</span></div>
+  </div>
+
+  <div class="note"><b>Optional finisher &mdash; Monkey Bar Traverse:</b> 2&ndash;3 traversals (5 rungs out and back = 1). Rest 60 sec between. Skip if grip is shot from pull-ups + toes-to-bar.</div>
+</section>
+
+<!-- ============ DEADLIFT DAY ============ -->
+<section id="deadlift">
+  <h2>Deadlift Day</h2>
+  <p class="lede">Heavy hex bar dead anchor &middot; 37 sets &middot; ~60 min. Starting at 225 lbs to re-acclimate the spine. Add 20 lbs per session at RPE &le;7 until ~315, then taper to +10. Don't grind even if it feels light.</p>
+
+  <div class="block">
+    <div class="block-head">BLOCK A &mdash; 2-ex superset &times; 5 rounds (heavy compounds, antagonist pairing)<span class="rest">Rest 3 min between rounds</span></div>
+    <div class="ex"><span class="tag">A1</span><span class="name">Hex Bar Deadlift</span><span class="scheme">5 &times; 5</span><span class="meta">225 lbs start &middot; 1 up / 2 down &middot; hex bar + plates</span></div>
+    <div class="ex"><span class="tag">A2</span><span class="name">Barbell Bench Press</span><span class="scheme">5 &times; 8</span><span class="meta">185 lbs &middot; 2 up / 3 down &middot; squat rack + plates</span></div>
+  </div>
+
+  <div class="block">
+    <div class="block-head">BLOCK B &mdash; 3-ex triset &times; 4 rounds (delts / pull / glute hinge)<span class="rest">Rest 90 sec between rounds</span></div>
+    <div class="ex"><span class="tag">B1</span><span class="name">DB Lateral Raise</span><span class="scheme">4 &times; 15</span><span class="meta">10&ndash;12 lb DBs &middot; controlled</span></div>
+    <div class="ex"><span class="tag">B2</span><span class="name">Voltra Seated Row</span><span class="scheme">4 &times; 10</span><span class="meta">Moderate &middot; 2 up / 2 down &middot; Voltra low + handle</span></div>
+    <div class="ex"><span class="tag">B3</span><span class="name">Hip Thrust</span><span class="scheme">4 &times; 10</span><span class="meta">185 lbs &middot; 2 up / 1 hold / 2 down &middot; bench + barbell + pad</span></div>
+  </div>
+
+  <div class="block">
+    <div class="block-head">BLOCK C &mdash; 2-ex superset &times; 3 rounds<span class="rest">Rest 75 sec between rounds</span></div>
+    <div class="ex"><span class="tag">C1</span><span class="name">Landmine Press</span><span class="scheme">3 &times; 10/side</span><span class="meta">Bar + 25 lbs &middot; 2 up / 3 down &middot; landmine + bar + plate</span></div>
+    <div class="ex"><span class="tag">C2</span><span class="name">Voltra Leg Curl</span><span class="scheme">3 &times; 12</span><span class="meta">35 lbs &middot; controlled &middot; Voltra low + ankle strap</span></div>
+  </div>
+
+  <div class="block">
+    <div class="block-head">BLOCK D &mdash; 3-ex triset &times; 3 rounds (arms + core finisher)<span class="rest">Rest 60 sec between rounds</span></div>
+    <div class="ex"><span class="tag">D1</span><span class="name">DB Hammer Curl</span><span class="scheme">3 &times; 12</span><span class="meta">25 lb DBs &middot; controlled</span></div>
+    <div class="ex"><span class="tag">D2</span><span class="name">Bodyweight Dips</span><span class="scheme">3 &times; 8&ndash;12</span><span class="meta">BW &middot; controlled &middot; dip station / rack handles</span></div>
+    <div class="ex"><span class="tag">D3</span><span class="name">Pallof Press</span><span class="scheme">3 &times; 10/side</span><span class="meta">Light&ndash;mod &middot; 3-sec hold &middot; Voltra mid + Bosu</span></div>
+  </div>
+
+  <div class="note"><b>Low back tight pre-dead?</b> Skip hex bar dead that session &mdash; sub in Voltra pull-through 4&times;10. Don't grind a tight back.</div>
+</section>
+
+<!-- ============ CARDIO ============ -->
+<section id="cardio">
+  <h2>Cardio Protocols</h2>
+  <p class="lede">Two Norway 4&times;4 sessions and one REHIT per week.</p>
+
+  <h3>Norway 4&times;4 &mdash; Tue, and Fri if not playing golf</h3>
+  <p class="lede" style="margin-bottom:10px">Wahoo KICKR Shift in <b>ERG mode</b>. Target = 88&ndash;93% of MAP. Total ~47 min.</p>
+  <div class="card scrollx">
+    <table>
+      <tr><th>Segment</th><th>Duration</th><th>Power</th><th>% MAP</th><th>Notes</th></tr>
+      <tr><td>Warmup</td><td>10 min</td><td>130&rarr;200 W</td><td>40&rarr;61%</td><td>Progressive ramp</td></tr>
+      <tr><td><b>Work 1&ndash;4</b></td><td>4:00</td><td><b>~296 W</b></td><td>~90%</td><td>Steady cadence 85&ndash;95 RPM</td></tr>
+      <tr><td>Recovery 1&ndash;3</td><td>4:00</td><td>~113 W</td><td>~50%</td><td>Active recovery, keep spinning</td></tr>
+      <tr><td>Cooldown</td><td>5 min</td><td>easy spin</td><td>&mdash;</td><td></td></tr>
+    </table>
+  </div>
+  <div class="note"><b>Pacing:</b> power fades &gt;5&ndash;10% by Interval 4 &rarr; drop next session 5&ndash;10 W. Interval 4 felt like a 5th was possible &rarr; add 5 W. HR should hit 90%+ of max by minute 2&ndash;3 of each work interval.</div>
+
+  <h3 class="blue">REHIT &mdash; Sunday</h3>
+  <p class="lede" style="margin-bottom:10px">KICKR in <b>Level mode</b> (not ERG). 10 minutes total.</p>
+  <div class="card scrollx">
+    <table>
+      <tr><th>Segment</th><th>Duration</th><th>Intensity</th><th>Notes</th></tr>
+      <tr><td>Warmup</td><td>3 min</td><td>~120 W easy spin</td><td>Get legs moving</td></tr>
+      <tr><td><b>Sprint 1</b></td><td>20 sec</td><td class="max">ABSOLUTE MAX</td><td>Stand if needed. Everything you have.</td></tr>
+      <tr><td>Recovery</td><td>3 min</td><td>~100 W easy</td><td>Let HR come down</td></tr>
+      <tr><td><b>Sprint 2</b></td><td>20 sec</td><td class="max">ABSOLUTE MAX</td><td>Stand if needed. Everything you have.</td></tr>
+      <tr><td>Recovery</td><td>3 min</td><td>~100 W easy</td><td>Let HR come down</td></tr>
+      <tr><td><b>Sprint 3</b></td><td>20 sec</td><td class="max">ABSOLUTE MAX</td><td>Match or exceed Sprint 1</td></tr>
+      <tr><td>Cooldown</td><td>3 min</td><td>easy</td><td></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ MOBILITY ============ -->
+<section id="mobility">
+  <h2>10-Minute Mobility</h2>
+  <p class="lede">Before every lift &mdash; Mon / Wed / Sat. Controlled articular rotations and dynamic work. Not static stretching.</p>
+
+  <div class="block">
+    <div class="ex" style="border-top:none"><span class="tag">0:00</span><span class="name">Standing Hip CARs</span><span class="scheme">60s</span><span class="meta">Stand on one leg, brace core, slow maximal circles at the hip &mdash; 1 each direction per side.</span></div>
+    <div class="ex"><span class="tag">1:00</span><span class="name">Hip 90/90 Transitions</span><span class="scheme">90s</span><span class="meta">Flow side to side, torso tall, 2-sec pause at each end.</span></div>
+    <div class="ex"><span class="tag">2:30</span><span class="name">World's Greatest Stretch</span><span class="scheme">90s</span><span class="meta">Lunge, elbow inside front foot, rotate and reach to ceiling, then straighten front leg for hamstring. 3 reps/side.</span></div>
+    <div class="ex"><span class="tag">4:00</span><span class="name">Quadruped T-spine Rotation</span><span class="scheme">90s</span><span class="meta">All fours, hand behind head, elbow to opposite hand then open to ceiling. Follow with eyes. 5&ndash;6/side.</span></div>
+    <div class="ex"><span class="tag">5:30</span><span class="name">Shoulder CARs</span><span class="scheme">90s</span><span class="meta">Fist, raise arm forward + overhead, rotate externally, sweep behind and down. Max circle, min speed.</span></div>
+    <div class="ex"><span class="tag">7:00</span><span class="name">Scapular Wall Slides</span><span class="scheme">60s</span><span class="meta">Back to wall, cactus arms, slide up &mdash; stop before lumbar arches off the wall. 8&ndash;10 reps.</span></div>
+    <div class="ex"><span class="tag">8:00</span><span class="name">Ankle Dorsiflexion</span><span class="scheme">60s</span><span class="meta">Face wall, foot 3&ndash;4 in away, drive knee over toes, heel down. 8&ndash;10/side.</span></div>
+    <div class="ex"><span class="tag">9:00</span><span class="name">Dead Hang</span><span class="scheme">60s</span><span class="meta">2&times;30s passive hang. Decompress spine, lats, shoulders. Breathe.</span></div>
+  </div>
+</section>
+
+<!-- ============ RULES ============ -->
+<section id="rules">
+  <h2>Lifting Rules</h2>
+
+  <h3>Superset Execution</h3>
+  <ul class="rules">
+    <li>Set up everything in the block <b>before</b> you start. Belt squat loaded, pull-up bar within reach, DBs in hand &mdash; eliminate the walk-around between exercises.</li>
+    <li>Within a round, transition fast (10&ndash;20 sec). Between rounds, take the full prescribed rest.</li>
+    <li>If a heavy main lift (belt squat, hex dead) starts grinding by round 3, take 30 extra sec between rounds. Don't compromise the anchor lift to hit the clock.</li>
+    <li>Accessory partner in a heavy block (pull-ups, lateral raises) is the <b>active recovery</b> &mdash; never push to failure during the heavy block. Save the redline for Block D.</li>
+    <li>If equipment competes, default to circuit format: all sets of A1, then all sets of A2, etc. You'll lose ~5 min.</li>
+  </ul>
+
+  <h3>Progression</h3>
+  <ul class="rules">
+    <li><b>Hex bar deadlift:</b> starting at 225 (re-acclimation). Add 20 lbs per session at RPE &le;7 until ~315, then taper to +10 lbs.</li>
+    <li><b>Belt squat:</b> capped at 200 lbs until the pulley upgrade. When sets feel easy at 200, add tempo (3-sec descent &rarr; 4-sec descent) or 1&ndash;2 reps before any other progression.</li>
+    <li><b>Bench:</b> add 5 lbs when 4&times;8 moves at RPE 7 or lower.</li>
+    <li><b>Accessories:</b> add 1&ndash;2 reps before adding weight. At the top of the rep range across all sets, bump the load.</li>
+    <li>RPE 9+ on the last set of a main lift &rarr; hold weight one more session.</li>
+    <li>Low-recovery day (Whoop yellow) &rarr; drop one round from each block, keep the weight.</li>
+    <li>On the main lifts (dead, belt squat) you CAN chase RPE 8&ndash;9. On the paired accessory in Block A, leave 3&ndash;4 in the tank &mdash; it's active recovery.</li>
+  </ul>
+</section>
+
+<!-- ============ RECOVERY ============ -->
+<section id="recovery">
+  <h2>Recovery &amp; Walking</h2>
+
+  <h3>Daily Walking</h3>
+  <p class="lede" style="margin-bottom:10px">Target <b>10,000+ steps</b>. Non-negotiable minimum: 8,000. Morning walk with Badger ~30&ndash;45 min (3&ndash;4.5k steps), afternoon/evening walk 45&ndash;60 min (4.5&ndash;6k steps).</p>
+  <div class="note"><b>4 PM check:</b> under 6k steps = evening walk is mandatory.</div>
+
+  <h3>Recovery Signals &mdash; When to Back Off</h3>
+  <div class="card scrollx">
+    <table>
+      <tr><th>Signal</th><th>Response</th></tr>
+      <tr><td><span class="pill r">Whoop &lt; 33%</span></td><td>Walk-only day. Skip the planned session.</td></tr>
+      <tr><td><span class="pill a">Whoop 33&ndash;66%</span></td><td>Do the session, drop 1 set per exercise.</td></tr>
+      <tr><td><b>Soreness &gt; 72 hrs</b></td><td>Reduce volume, not intensity.</td></tr>
+      <tr><td><b>Low-recovery day</b></td><td>Prioritize protein. Lighter session OK. Never skip the shake.</td></tr>
+      <tr><td><b>Low back tight pre-dead</b></td><td>Skip hex bar dead &mdash; sub Voltra pull-through 4&times;10. Don't grind a tight back.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ BENCHMARKS ============ -->
+<section id="testing">
+  <h2>Benchmark Testing</h2>
+  <p class="lede">Next test: <b>Full Frontal 4DP</b> in Wahoo SYSTM on <b>June 19, 2026</b>, vs. the April 22 baseline. Track body comp trend and strength PRs (hex bar dead 5RM, belt squat 8RM, bench 8RM).</p>
+
+  <div class="card scrollx">
+    <table>
+      <tr><th>Metric</th><th>Success</th><th>Acceptable</th><th>Concern</th></tr>
+      <tr><td><b>FTP, MAP</b></td><td>Any improvement</td><td>Within 5 W</td><td>Drop &gt; 10 W</td></tr>
+      <tr><td><b>AC, NM</b></td><td>Any improvement</td><td>Within 10 W</td><td>Drop &gt; 15 W</td></tr>
+      <tr><td><b>Body comp</b></td><td>Trending down</td><td>Hold or down</td><td>Trending up</td></tr>
+      <tr><td><b>Hex dead 5&times;5</b></td><td>315 lbs cleanly</td><td>285 lbs</td><td>Stuck below 275</td></tr>
+      <tr><td><b>Belt squat 4&times;8</b></td><td>RPE 6&ndash;7 at 200</td><td>RPE 7&ndash;8 at 200</td><td>RPE 9+ at 200 (deload)</td></tr>
+      <tr><td><b>DS load tracking</b></td><td>Maintain or improve</td><td>Within 5%</td><td>Drop &gt; 5%</td></tr>
+    </table>
+  </div>
+
+  <h3>Decision Framework</h3>
+  <ul class="rules">
+    <li>FTP/MAP improve AND body comp improves &rarr; protocol works, continue.</li>
+    <li>FTP/MAP hold AND body comp improves &rarr; reduced cardio is sufficient, continue.</li>
+    <li>FTP/MAP decline AND body comp improves &rarr; add 3rd Norway next block (Fri becomes default, golf-flex shifts to Thu PM).</li>
+    <li>Strength plateaus but body comp improves &rarr; check protein intake first, then consider a 4th lift per week.</li>
+    <li>Everything declines &rarr; return to structured SYSTM plan, home gym as supplement only.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer>Training Plan &middot; updated June 2026</footer>
+
+<script>
+(function(){
+  var sections = Array.prototype.slice.call(document.querySelectorAll('main section'));
+  var links = Array.prototype.slice.call(document.querySelectorAll('#nav a'));
+  var ids = sections.map(function(s){return s.id});
+
+  function show(id){
+    if(ids.indexOf(id) === -1) id = defaultSection();
+    sections.forEach(function(s){s.classList.toggle('visible', s.id===id)});
+    links.forEach(function(a){
+      var active = a.getAttribute('href') === '#'+id;
+      a.classList.toggle('active', active);
+      if(active && a.scrollIntoView) a.scrollIntoView({block:'nearest', inline:'center', behavior:'smooth'});
+    });
+    window.scrollTo(0,0);
+    try{localStorage.setItem('tp-last', id)}catch(e){}
+  }
+
+  // Sensible default: today's likely focus. Lift days -> last viewed lift day or squat; Tue/Fri/Sun -> cardio; else week view.
+  function defaultSection(){
+    var d = new Date().getDay();
+    if(d===2||d===5||d===0) return d===0 ? 'cardio' : 'cardio';
+    if(d===1||d===3||d===6){
+      var last = null;
+      try{last = localStorage.getItem('tp-last')}catch(e){}
+      return (last==='squat'||last==='deadlift') ? last : 'week';
+    }
+    return 'week';
+  }
+
+  function fromHash(){
+    var id = location.hash.replace('#','');
+    show(id || defaultSection());
+  }
+
+  window.addEventListener('hashchange', fromHash);
+  fromHash();
+
+  // Highlight today's row in the weekly schedule
+  var today = new Date().getDay();
+  var row = document.querySelector('#weekTable tr[data-day="'+today+'"]');
+  if(row) row.classList.add('today');
+})();
+</script>
+</body>
+</html>
