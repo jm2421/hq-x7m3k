@@ -1,15 +1,21 @@
 <!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1.0, viewport-fit=cover'><meta name='robots' content='noindex'><meta name='theme-color' content='#0c0f16'><title>Training</title>
 <style>
   :root{
-    --bg:#0c0f16; --surface:#141a24; --surface2:#1b2330; --border:#28303f;
-    --text:#e7ecf3; --muted:#93a1b5; --muted2:#6b7688;
-    --fitness:#fb923c; --nutrition:#34d399; --supplements:#38bdf8; --peptides:#a78bfa;
-    --recovery:#22d3ee; --cost:#fbbf24;
+    --bg:#0c0f16; --surface:#141a24; --surface2:#1b2330; --border:#3a4557;
+    
+    --rule:#61728f;
+    --text:#e7ecf3; --muted:#93a1b5; --muted2:#8592a6;
+    --fitness:#fb923c; --mint:#34d399; --sky:#38bdf8; --violet:#a78bfa;
+    
+    --week:#f0abfc;   
+    --recovery:#22d3ee; --amber:#fbbf24;
     --accent:#2dd4bf;
     --radius:16px; --maxw:900px;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   }
   *{box-sizing:border-box}
+  
+  [hidden]{display:none !important}
   html{-webkit-text-size-adjust:100%}
   body{
     margin:0; background:var(--bg); color:var(--text); font-family:var(--sans);
@@ -34,7 +40,7 @@
   .lede{font-size:18px; color:#cfd8e3}
   .muted{color:var(--muted)}
   ul{margin:0 0 16px; padding-left:20px} li{margin:6px 0; color:#d3dae4}
-  /* hub cards */
+  
   .hero{padding:40px 0 30px}
   .grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:4px}
   @media(max-width:620px){.grid{grid-template-columns:1fr}}
@@ -52,13 +58,13 @@
   .card p{margin:0; color:var(--muted); font-size:14.5px}
   .card .go{margin-top:14px; color:var(--c); font-weight:600; font-size:14px}
   .card::before{content:""; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--c); opacity:.9}
-  /* generic blocks */
+  
   .section{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
     padding:18px 20px; margin:16px 0}
   .callout{border-left:4px solid var(--pageaccent,var(--accent)); background:var(--surface);
     border-radius:12px; padding:14px 18px; margin:18px 0}
   .callout.warn{border-left-color:#f59e0b}
-  .callout.info{border-left-color:var(--supplements)}
+  .callout.info{border-left-color:var(--sky)}
   .callout .t{font-weight:700; margin-bottom:4px}
   .callout p{margin:0; color:#cdd6e1; font-size:15px}
   .pill{display:inline-block; font-size:12px; font-weight:700; padding:3px 10px; border-radius:999px;
@@ -69,7 +75,7 @@
   table{border-collapse:collapse; width:100%; min-width:520px; font-size:14.5px}
   th,td{text-align:left; padding:10px 13px; border-bottom:1px solid var(--border); vertical-align:top}
   th{background:var(--surface2); color:var(--text); font-weight:700; font-size:13px;
-    letter-spacing:.02em; position:sticky; top:0}
+    letter-spacing:.02em; }
   tr:last-child td{border-bottom:none}
   td.em{color:#fff; font-weight:600}
   .improve{background:linear-gradient(180deg, color-mix(in srgb,var(--pageaccent,var(--accent)) 8%, var(--surface)), var(--surface));
@@ -80,14 +86,11 @@
   .improve li b{color:#fff}
   footer{margin-top:44px; padding-top:20px; border-top:1px solid var(--border);
     color:var(--muted2); font-size:13px}
-  .disclaimer{background:#20160b; border:1px solid #6b4a1e; border-radius:12px; padding:14px 18px;
-    margin:18px 0; color:#f2d9b3; font-size:14.5px}
-  .disclaimer b{color:#fbbf24}
   .stat{display:inline-flex; flex-direction:column; gap:2px; background:var(--surface2);
     border:1px solid var(--border); border-radius:12px; padding:12px 16px; margin:4px 8px 4px 0}
   .stat b{font-size:20px; color:#fff} .stat span{font-size:12px; color:var(--muted)}
   .updated{color:var(--muted2); font-size:13px; margin-top:2px}
-  /* change markers for the revised plan */
+  
   .tag{display:inline-block; font-size:10.5px; font-weight:800; letter-spacing:.06em;
     text-transform:uppercase; padding:2px 7px; border-radius:6px; margin-right:7px;
     vertical-align:2px; white-space:nowrap}
@@ -97,7 +100,7 @@
   .legend{display:flex; flex-wrap:wrap; gap:14px; background:var(--surface); border:1px solid var(--border);
     border-radius:12px; padding:12px 16px; margin:16px 0; font-size:14px; color:var(--muted)}
   .legend span{display:flex; align-items:center}
-  /* workout blocks */
+  
   .blk{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
     padding:0; margin:18px 0; overflow:hidden}
   .blk > .bh{background:var(--surface2); padding:13px 18px; border-bottom:1px solid var(--border)}
@@ -106,7 +109,7 @@
   .blk ol.ex{list-style:none; padding:0; margin:0}
   .blk ol.ex > li{padding:13px 18px; border-bottom:1px solid var(--border); margin:0}
   .blk ol.ex > li:last-child{border-bottom:none}
-  .blk .nm{color:#fff; font-weight:700}
+  div.blk .nm{color:#fff; font-weight:700}
   .blk .rx{color:var(--pageaccent,var(--accent)); font-weight:600; font-size:14px}
   .blk .why{color:var(--muted); font-size:13.5px; margin-top:3px}
   .tier{display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin:16px 0}
@@ -123,7 +126,7 @@
   .subnav .d{color:var(--muted); font-size:14px; margin-top:3px}
   .subnav .badge{font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
     color:var(--pageaccent,var(--accent)); margin-left:8px}
-  /* run sheets — phone-first session pages */
+  
   .daybar{display:flex; gap:10px; flex-wrap:wrap; margin:0 0 20px}
   .daybar a{flex:1 1 150px; text-align:center; padding:12px 10px; border-radius:12px;
     background:var(--surface); border:1px solid var(--border); color:var(--muted);
@@ -166,6 +169,419 @@
   .rules div{padding:11px 0; border-top:1px solid var(--border); font-size:14.5px; color:#cfd8e3}
   .rules div:first-child{border-top:none}
   .rules b{color:#fff}
+
+  
+  .tw{overflow-x:auto; -webkit-overflow-scrolling:touch;
+    border:1px solid var(--border); border-radius:12px; margin:10px 0 0}
+  table.dense{border-collapse:collapse; width:100%; min-width:720px; font-size:13.5px}
+  
+  table.dense.compact{min-width:auto}
+  table.dense td{line-height:1.4}
+  table.dense th,table.dense td{text-align:left; padding:8px 12px;
+    border-bottom:1px solid var(--rule); vertical-align:top}
+  table.dense thead th{background:var(--surface2); color:var(--muted);
+    font-size:11px; letter-spacing:.08em; text-transform:uppercase}
+  
+  table.dense tbody tr:last-child td{border-bottom:none}
+  table.dense td.nm{min-width:170px}
+  table.dense td.nm b{color:#fff; font-weight:600}
+  
+  .src{display:block; color:var(--muted2); font-size:11.5px;
+    font-weight:400; margin-top:3px; line-height:1.5}
+  table.dense .src{margin-top:1px}
+  table.dense td.dose{white-space:nowrap; font-variant-numeric:tabular-nums; color:#cfd8e3}
+  table.dense .qty{display:block; color:var(--muted2); font-size:11.5px}
+  table.dense td.mech{color:var(--muted); max-width:290px}
+  
+  .mechin{display:none}
+  table.dense td.ben{color:#cfd8e3; max-width:250px}
+  table.dense td.cost,table.dense td.num,table.dense th.num{
+    text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums}
+  table.dense tr.note td{border-bottom:1px solid var(--rule); padding:0 12px 9px 24px;
+    color:var(--muted); font-size:12.5px; line-height:1.5; position:relative}
+  table.dense tr.note td::before{content:""; position:absolute; left:12px; top:2px;
+    bottom:9px; width:2px; border-radius:2px; background:var(--rule)}
+  
+  table.dense tbody tr:has(+ tr.note) td{border-bottom:none}
+  .ev-ok{color:#34d399; font-size:11.5px; font-weight:700}
+  .ev-warn{color:var(--amber); font-size:11.5px; font-weight:700}
+
+  
+  td.gr{white-space:nowrap; width:1%}
+  td.gr .g{font-weight:800; font-size:12.5px; letter-spacing:.02em}
+  td.gr .pips{display:flex; gap:2px; margin-top:3px}
+  td.gr .pips i{width:5px; height:3px; border-radius:2px; background:var(--rule)}
+  
+  .gsw{display:inline-flex; align-items:center; gap:5px; vertical-align:-2px}
+  .gsw .g{font-weight:800; font-size:12.5px}
+  .gsw .pips{display:inline-flex; gap:2px}
+  .gsw .pips i{width:4px; height:3px; border-radius:2px; background:var(--rule)}
+  .gsw.ta .g{color:#34d399} .gsw.ta .pips i.on{background:#34d399}
+  .gsw.tb .g{color:#60a5fa} .gsw.tb .pips i.on{background:#60a5fa}
+  .gsw.tc .g{color:#fbbf24} .gsw.tc .pips i.on{background:#fbbf24}
+  .gsw.td .g{color:#f87171} .gsw.td .pips i.on{background:#f87171}
+  td.gr.ta .g{color:#34d399} td.gr.ta .pips i.on{background:#34d399}
+  td.gr.tb .g{color:#60a5fa} td.gr.tb .pips i.on{background:#60a5fa}
+  td.gr.tc .g{color:#fbbf24} td.gr.tc .pips i.on{background:#fbbf24}
+  td.gr.td .g{color:#f87171} td.gr.td .pips i.on{background:#f87171}
+
+  .stats{display:flex; flex-wrap:wrap; gap:10px; margin:18px 0 6px}
+  .tile{background:var(--surface2); border:1px solid var(--border); border-radius:12px;
+    padding:11px 15px; display:flex; flex-direction:column; min-width:120px}
+  .tile b{font-size:20px; color:#fff; font-variant-numeric:tabular-nums}
+  .tile span{font-size:11.5px; color:var(--muted); margin-top:2px}
+  .tile.ta b{color:#34d399} .tile.tb b{color:#60a5fa}
+  .tile.tc b{color:#fbbf24} .tile.td b{color:#f87171}
+  .recon{font-size:13.5px; margin:10px 0 22px}
+
+  .nowcard{background:var(--surface2); border:1px solid var(--pageaccent,var(--accent));
+    border-left-width:4px; border-radius:13px; padding:14px 16px; margin:16px 0 12px}
+  .nowcard .nowhd{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+  .nowcard .nowhd b{font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--pageaccent,var(--accent))}
+  .nowcard .nowhd span{color:#fff; font-size:15.5px; font-weight:600}
+  .nowcard .nowlist{color:var(--muted); font-size:13.5px; margin:9px 0 0; line-height:1.6}
+  .nowcard .nowlist .ni{display:inline-flex; align-items:baseline; gap:5px;
+    margin:0 12px 6px 0; white-space:nowrap}
+  .nowcard .nowlist .ni b{color:#fff; font-weight:600}
+  .nowcard .nowlist .ni em{font-style:normal; color:var(--muted2);
+    font-variant-numeric:tabular-nums}
+  .nowcard .nowlist .ni.more{color:var(--muted2)}
+  .nowcard .nowhd .when{color:var(--muted2); font-size:12.5px}
+  .nowcard .nowgo{display:block; margin-top:4px}
+  .nowcard .nowgo a{display:inline-flex; align-items:center; min-height:44px;
+    margin-right:16px; font-size:14px; color:var(--pageaccent,var(--accent));
+    font-weight:600; text-decoration:none}
+  .nowcard .nowlist .ng{font-style:normal; font-size:12px; font-weight:800;
+    padding:1px 5px; border-radius:4px; background:rgba(148,163,184,.16)}
+  .nowcard .nowlist .ng.a{color:#34d399} .nowcard .nowlist .ng.b{color:#60a5fa}
+  .nowcard .nowlist .ng.c{color:#fbbf24}
+  
+  .nowcard .nowlist .ng.d{color:#fca5a5; background:rgba(248,113,113,.18)}
+  .nowcard .nowlist .ng.n{color:#a7b2c4}
+
+  
+  .basis{display:inline-block; margin:3px 5px 0 0; padding:2px 8px; border-radius:5px;
+    font-size:11px; font-weight:700; letter-spacing:.02em; text-decoration:none;
+    background:rgba(167,139,250,.16); color:#c4b5fd; border:1px solid rgba(167,139,250,.35);
+    white-space:nowrap; vertical-align:middle}
+  .basis:hover{background:rgba(167,139,250,.28)}
+  h3 .basis,summary .basis{margin-left:8px; font-size:10.5px}
+  .basis-sec{margin:26px 0 8px; padding:18px 20px; border-radius:14px; background:var(--surface);
+    border:1px solid rgba(167,139,250,.35); border-left:4px solid #a78bfa}
+  .basis-sec h2{margin-top:0}
+  .basis-sec .lead{font-weight:700; color:#e2e8f0}
+  .basis-why{margin-top:6px}
+  .basis-why b{color:#c4b5fd}
+  .qual{display:inline-block; margin:3px 5px 0 0; padding:2px 7px; border-radius:5px;
+    background:rgba(148,163,184,.13); color:var(--muted); font-size:11px}
+  td.ben .qual,td.dose .qual{white-space:normal}
+  td.dose .qual{display:block; margin-top:4px}
+  
+  .qual.up{background:rgba(148,163,184,.13); color:#cfd8e3}
+  .qual.up::before{content:"↑ "; font-weight:700}
+  .qual.down{background:rgba(148,163,184,.13); color:var(--muted)}
+  .qual.down::before{content:"↓ "; font-weight:700}
+  
+  .qual.observational{background:rgba(148,163,184,.10); color:var(--muted);
+    border:1px dashed var(--rule)}
+  .qual.observational::before{content:"≈ "; font-weight:700}
+  
+  
+  .qual.preliminary{background:rgba(148,163,184,.13); color:var(--muted);
+    border-bottom:2px dotted var(--rule)}
+  .qual.preliminary::before{content:"↑ "; font-weight:700; opacity:.55}
+  .qual.mixed{background:linear-gradient(180deg,rgba(207,216,227,.16),
+    rgba(148,163,184,.08)); color:#b9c4d3}
+  .qual.mixed::before{content:"↕ "; font-weight:700}
+  
+  .side{display:inline-block; background:none; border:1px dashed var(--border);
+    border-radius:6px; padding:1px 7px; font-size:11.5px; color:var(--muted2);
+    letter-spacing:.01em}
+  .side.gap{border-style:dotted; font-style:normal}
+  
+  .side.freq{border-style:solid; border-color:var(--muted2); color:#cfd8e3}
+  
+  .todo{color:#fbbf24; font-size:12.5px}
+  ul.labs{list-style:none; margin:8px 0 14px; padding:0; display:grid; gap:7px}
+  ul.labs li{background:var(--surface); border:1px solid var(--border);
+    border-radius:9px; padding:9px 12px; font-size:13.5px; color:#cfd8e3}
+  ul.labs b{color:#fff; font-weight:600}
+  ul.labs span{display:block; color:var(--muted); font-size:12.5px; margin-top:2px}
+  
+  .nil{color:var(--muted)}
+  .whenx{color:var(--muted2); font-size:12px; font-weight:400}
+  
+  
+  .editorial{border-left:2px solid var(--rule); padding-left:10px; display:block}
+  .editorial::before{content:"not from the sheet"; display:block; font-size:10.5px;
+    letter-spacing:.07em; text-transform:uppercase; color:var(--muted2);
+    margin-bottom:2px}
+  .conflict{color:#f87171}
+  tr.tot td{border-top:1px solid var(--muted2); font-weight:700}
+  
+  .callout.thin{border-left-color:#cbd5e1; border-left-width:5px}
+  .callout.thin .t{color:#fff}
+  .small{font-size:13px}
+  td.rep{color:var(--muted); font-size:12.5px; white-space:nowrap}
+  b.rule{display:block; color:#cfd8e3; margin-bottom:4px}
+  details.recon{background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; margin:14px 0 24px; padding:0}
+  details.recon summary{padding:13px 16px; min-height:44px; cursor:pointer;
+    color:var(--muted); font-size:13.5px; display:flex; align-items:center;
+    list-style:none}
+  details.recon summary::-webkit-details-marker{display:none}
+  details.recon summary::before{content:"+"; margin-right:9px; font-weight:700;
+    color:var(--pageaccent,var(--accent))}
+  details.recon[open] summary::before{content:"−"}
+  details.recon > *:not(summary){margin-left:16px; margin-right:16px}
+  details.recon > *:last-child{margin-bottom:16px}
+  td.cost.delta{color:var(--amber); font-weight:700}
+  nav.jump a.alt{border-style:dashed}
+  
+  
+  details.cyc.off{opacity:.82}
+  details.cyc.off summary b{color:var(--muted)}
+  details.cyc.unknown{border-style:dotted; border-color:var(--muted2)}
+  details.cyc.unknown .state{background:rgba(148,163,184,.10); color:var(--muted2)}
+  article.cyc.sketch{border-style:dashed; border-color:var(--amber)}
+  article.cyc.sketch .state{background:rgba(251,191,36,.14); color:var(--amber)}
+  .legendbar{background:var(--surface); border:1px solid var(--border);
+    border-radius:11px; padding:10px 14px; font-size:12.5px; color:var(--muted);
+    margin:0 0 14px}
+  .legendbar b{color:#cfd8e3; margin-right:2px}
+  nav.jump{display:flex; gap:7px; overflow-x:auto; padding-bottom:6px; margin:0 0 6px;
+    align-items:center; -webkit-overflow-scrolling:touch}
+  nav.jump > span{color:var(--muted2); font-size:11px; text-transform:uppercase;
+    letter-spacing:.08em; white-space:nowrap; margin-right:2px}
+  nav.jump a{display:inline-flex; gap:6px; align-items:center; white-space:nowrap;
+    background:var(--surface); border:1px solid var(--border); border-radius:999px;
+    padding:0 15px; min-height:44px; font-size:13px; color:#cfd8e3; text-decoration:none}
+  nav.jump a span{color:var(--muted2); font-size:11px}
+  nav.jump a:hover{border-color:var(--pageaccent); color:#fff}
+
+  
+  section.blk{background:none; border:0; border-radius:0; overflow:visible;
+    padding:0; margin:30px 0 0; scroll-margin-top:12px}
+  section.blk h2{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;
+    font-size:21px; margin:0}
+  
+  section.blk{border-top:1px solid var(--rule); padding-top:18px}
+  section.blk h2 .when{color:var(--muted); font-weight:400; font-size:13.5px}
+  section.blk h2 .bmeta{margin-left:auto; color:var(--muted2); font-weight:400;
+    font-size:12px; font-variant-numeric:tabular-nums}
+  section.blk.now > h2::before{content:"NOW"; background:var(--pageaccent);
+    color:#06131a; font-size:10px; font-weight:800; letter-spacing:.08em;
+    padding:3px 7px; border-radius:5px}
+
+  
+  .cycles{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:12px; margin:12px 0 0}
+  .cyc{background:var(--surface); border:1px solid var(--border); border-radius:13px;
+    padding:14px 15px; margin:0}
+  .cyc header{display:flex; align-items:center; justify-content:space-between;
+    gap:10px; margin-bottom:6px}
+  .cyc h3{font-size:15px; margin:0; color:#fff}
+  .cyc .state{font-size:10.5px; font-weight:800; letter-spacing:.07em;
+    text-transform:uppercase; padding:3px 8px; border-radius:6px; white-space:nowrap;
+    background:rgba(148,163,184,.15); color:var(--muted)}
+  .cyc .since{margin:6px 0 0; font-size:12px}
+  .cyc .sw{margin-left:8px; font-size:11px; font-weight:700; padding:3px 10px; border-radius:999px; white-space:nowrap;
+    border:1px solid var(--border); background:var(--surface2); color:#cfd8e3; cursor:pointer}
+  .cyc .sw:hover{border-color:#34d399; color:#34d399}
+  .cyc .sw[disabled]{opacity:.5; cursor:wait}
+  .cyc .sw-msg{font-size:11.5px; color:var(--muted); margin-left:8px}
+  .cyc.on{border-color:#34d399}
+  .cyc.on .state{background:rgba(52,211,153,.16); color:#34d399}
+  
+  details.cyc{padding:0; background:var(--surface2)}
+  details.cyc summary{display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    padding:13px 15px; min-height:44px; cursor:pointer; list-style:none}
+  details.cyc summary::-webkit-details-marker{display:none}
+  details.cyc summary::before{content:"+"; font-weight:700; color:var(--muted);
+    width:14px; flex:none}
+  details.cyc[open] summary::before{content:"−"}
+  details.cyc summary b{color:#fff; font-size:14.5px; font-weight:600}
+  details.cyc summary .who{color:var(--muted2); font-size:12px; flex:1 1 100%}
+  details.cyc[open] summary{border-bottom:1px solid var(--border)}
+  details.cyc .meta,details.cyc ul.comp,details.cyc p.muted{margin-left:15px;
+    margin-right:15px}
+  details.cyc ul.comp{margin-top:11px}
+  details.cyc p.muted:last-child{padding-bottom:13px}
+  details.cyc .meta{margin-top:11px}
+  
+  details.cyc summary .flag{background:rgba(248,113,113,.15); color:#fca5a5;
+    border-radius:6px; padding:2px 8px; font-size:11px; font-weight:600;
+    letter-spacing:.03em}
+  .cyc.sketch{border-style:dashed}
+  .cyc.sketch .state{background:rgba(148,163,184,.10); color:var(--muted2);
+    font-style:italic}
+  .cycles.off{grid-template-columns:1fr; gap:8px; margin-top:12px}
+  .cyc .meta{color:var(--muted); font-size:12.5px; margin:0 0 8px}
+  .cyc ul.comp{list-style:none; margin:0; padding:0; display:flex;
+    flex-direction:column; gap:4px}
+  .cyc ul.comp li{font-size:13px; color:#cfd8e3; padding-left:11px; position:relative}
+  .cyc ul.comp li::before{content:""; position:absolute; left:0; top:8px;
+    width:4px; height:4px; border-radius:50%; background:var(--pageaccent)}
+  .cyc ul.comp b{color:#fff; font-weight:600}
+  .cyc p.muted{font-size:12.5px; margin:9px 0 0}
+  td.note-cell{color:var(--muted); font-size:12.5px; max-width:420px}
+
+  
+  .toggles{display:flex; flex-wrap:wrap; gap:8px; margin:6px 0 14px}
+  .tog{display:inline-flex; align-items:center; gap:8px; cursor:pointer;
+    background:var(--surface); border:1px solid var(--border); border-radius:999px;
+    padding:0 16px; min-height:44px; font-size:13.5px; color:#cfd8e3; user-select:none}
+  .tog input{width:auto; margin:0; accent-color:var(--pageaccent)}
+  .tog::before{content:""; width:9px; height:9px; border-radius:3px; background:var(--lc,#666)}
+  .tog.off{background:var(--bg); color:var(--muted2);
+    border-color:var(--rule); border-style:dashed}
+  .tog.off::before{background:none; box-shadow:inset 0 0 0 2px var(--lc,#666)}
+  
+  a:focus-visible,button:focus-visible,summary:focus-visible,
+  input:focus-visible,select:focus-visible,textarea:focus-visible,
+  [tabindex]:focus-visible{outline:2px solid var(--pageaccent,var(--accent));
+    outline-offset:2px}
+  
+  .quick{margin:0; display:flex; flex-wrap:wrap; gap:8px}
+  .quick a{display:inline-flex; align-items:center; min-height:44px; padding:0 14px;
+    border:1px solid var(--border); border-radius:999px; background:var(--surface2);
+    color:#cfd8e3; font-size:14px}
+  .quick a:hover{color:#fff; border-color:var(--muted2)}
+  .tog:focus-within{outline:2px solid var(--pageaccent,var(--accent));
+    outline-offset:2px}
+  
+  .tog.bandonly span::after{content:" ↓ below"; color:var(--muted2);
+    font-size:11px; letter-spacing:.04em}
+  .band.flash{animation:bandflash 1.1s ease-out 1}
+  @keyframes bandflash{
+    from{border-color:var(--lc,var(--accent)); box-shadow:0 0 0 3px rgba(148,163,184,.16)}
+    to{border-color:var(--border); box-shadow:none}}
+  @media (prefers-reduced-motion:reduce){ .band.flash{animation:none} }
+
+  .cal{overflow-x:auto}
+  table.week{border-collapse:separate; border-spacing:0; width:100%; min-width:820px}
+  table.week th,table.week td{vertical-align:top; padding:7px;
+    border-bottom:1px solid var(--rule); border-right:1px solid var(--rule)}
+  table.week thead th{background:var(--surface2); color:#cfd8e3; font-size:13px;
+    text-align:left; padding:9px 10px}
+  table.week th.slot{width:92px; background:var(--surface2); color:var(--muted);
+    text-align:left; font-weight:400; position:sticky; left:0; z-index:1}
+  table.week th.slot b{display:block; color:#cfd8e3; font-size:12.5px; font-weight:600}
+  table.week th.slot span{font-size:11px; color:var(--muted2);
+    font-variant-numeric:tabular-nums}
+  
+  table.week tr.ed td.edc{background:var(--bg); padding:7px 9px}
+  table.week tr.ed td.pad{background:var(--surface2); border-right-color:var(--rule)}
+  table.week tr.ed.only td.edc{background:none}
+  .calempty{background:var(--surface); border:1px dashed var(--rule);
+    border-radius:12px; padding:16px 18px; color:var(--muted); margin:0 0 14px}
+  
+  .edgekey{font-size:12.5px; color:var(--muted2); margin:12px 0 0; line-height:1.6}
+  .edgekey b{color:#cfd8e3; font-weight:600; border-left:3px solid var(--lc,var(--muted));
+    padding-left:7px}
+  table.week tr.ed .lbl{display:inline-block; font-size:10px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--muted2); margin:0 10px 0 0;
+    vertical-align:middle}
+  table.week tr.ed .chip{display:inline-block; width:auto; min-height:0;
+    margin:2px 6px 2px 0; padding:7px 10px; vertical-align:middle}
+  table.week tr:last-child th,table.week tr:last-child td{border-bottom:none}
+  table.week th:last-child,table.week td:last-child{border-right:none}
+  
+  table.week td.today,table.week thead th.today{
+    background:color-mix(in srgb,var(--pageaccent,#2dd4bf) 10%,transparent);
+    box-shadow:inset 2px 0 0 var(--pageaccent,var(--accent)),
+      inset -2px 0 0 var(--pageaccent,var(--accent))}
+  table.week thead th.today{color:#fff; font-weight:700}
+  thead .td{display:inline-block; margin-left:7px; font-size:11px; font-weight:800;
+    letter-spacing:.08em; color:var(--pageaccent); vertical-align:middle}
+
+  
+  .today{margin:-6px 0 26px; padding:16px 18px 12px; border:1px solid var(--border);
+    border-radius:14px; background:var(--surface)}
+  .today .thead{display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px;
+    margin-bottom:12px}
+  .today .eyebrow{margin:0}
+  .today .eyebrow span{color:var(--muted); letter-spacing:0; text-transform:none;
+    font-weight:500}
+  .ttabs{display:flex; gap:4px; margin-left:auto; overflow-x:auto;
+    -webkit-overflow-scrolling:touch}
+  .ttabs button{appearance:none; border:1px solid transparent; background:none;
+    color:var(--muted); font:inherit; font-size:12.5px; font-weight:600;
+    padding:5px 9px; border-radius:999px; cursor:pointer; min-height:32px}
+  .ttabs button.istoday{color:var(--pageaccent)}
+  .ttabs button[aria-selected=true]{background:var(--bg); color:#fff;
+    border-color:var(--border)}
+  .ttabs button:focus-visible{outline:2px solid var(--pageaccent)}
+  .tday{margin:0}
+  .tband{display:grid; grid-template-columns:92px 1fr; gap:10px; padding:9px 0;
+    border-top:1px solid var(--border)}
+  .tband:first-child{border-top:none; padding-top:0}
+  .tslot b{display:block; color:#fff; font-size:12.5px; font-weight:700}
+  .tslot span{display:block; color:var(--muted2); font-size:11.5px}
+  .tchips{display:flex; flex-wrap:wrap; gap:8px}
+  .today .chip{margin:0; min-height:0; padding:7px 10px; background:var(--bg);
+    flex:1 1 170px; max-width:100%}
+  .today a.chip:hover{background:var(--surface2)}
+  .tfoot{margin:10px 0 0; font-size:13px}
+  @media (max-width:520px){
+    .tband{grid-template-columns:1fr; gap:4px}
+    .tslot b,.tslot span{display:inline; margin-right:6px}
+    .today .chip{flex-basis:100%}
+  }
+
+  
+  .tvl{display:grid; grid-template-columns:minmax(260px,340px) 1fr; gap:22px; align-items:start}
+  .tvl-controls h2{margin-top:14px}
+  .tvl-controls h2:first-child{margin-top:0}
+  .eqgrid{display:grid; grid-template-columns:1fr; gap:6px; margin:6px 0 10px}
+  .eqgrid .tog{justify-content:flex-start; border-radius:10px; padding:8px 12px; flex-wrap:wrap}
+  .eqgrid .tog small{display:block; width:100%; color:var(--muted2); font-size:11.5px; padding-left:25px}
+  .tog.l-eq{--lc:var(--fitness)}
+  .tbtns,.presets{display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 4px}
+  .presets .lbl{font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted2); align-self:center; margin-right:4px}
+  .tbtn{appearance:none; background:var(--surface); border:1px solid var(--border); color:var(--muted);
+    font:inherit; font-size:13px; font-weight:600; padding:7px 12px; border-radius:999px; cursor:pointer; min-height:36px}
+  .tbtn.on{background:var(--bg); color:#fff; border-color:var(--pageaccent); box-shadow:inset 0 0 0 1px var(--pageaccent)}
+  .tbtn:focus-visible{outline:2px solid var(--pageaccent)}
+  .tvl-out .stats{margin-top:0}
+  .pill.core{background:color-mix(in srgb,var(--fitness) 18%,transparent); color:#fff}
+  .pill.important{background:color-mix(in srgb,var(--sky) 18%,transparent); color:#fff}
+  .pill.cut_first,.pill.optional{background:var(--surface2); color:var(--muted)}
+  ul.rules{list-style:none; padding:14px 18px; margin:8px 0}
+  ul.rules li{padding:9px 0; border-top:1px solid var(--border); font-size:14.5px; color:#cfd8e3}
+  ul.rules li:first-child{border-top:none}
+  @media (max-width:860px){ .tvl{grid-template-columns:1fr} }
+
+  .chip{display:block; border-left:3px solid var(--lc,#666); border-radius:6px;
+    background:var(--surface); padding:9px 10px; margin:0 0 8px; font-size:12.5px;
+    color:#cfd8e3; text-decoration:none; min-height:44px}
+  .chip:last-child{margin-bottom:0}
+  a.chip:hover{background:var(--surface2); color:#fff}
+  .chip b{display:block; font-weight:600; color:#fff; font-size:12.5px}
+  .chip span{display:block; color:var(--muted); font-size:11.5px; margin-top:1px}
+  
+
+  .band{background:var(--surface); border:1px solid var(--border); border-radius:13px;
+    padding:15px 17px; margin:18px 0 0; border-left:3px solid var(--lc,#666)}
+  .band h2{margin:0 0 4px; font-size:17px}
+  .band ul.pep{list-style:none; margin:10px 0 0; padding:0; display:flex;
+    flex-wrap:wrap; gap:8px}
+  .band ul.pep li{background:var(--surface2); border:1px solid var(--border);
+    border-radius:9px; padding:7px 11px; font-size:13px; color:#cfd8e3}
+  .band ul.pep b{color:#fff}
+
+  @media (max-width:640px){
+    
+    
+    table.dense th.mech,table.dense td.mech{display:none}
+    .mechin{display:block; margin-top:5px; font-weight:400; font-size:12px;
+      line-height:1.45; color:var(--muted)}
+    .mechin::before{content:"how "; font-size:10px; letter-spacing:.08em;
+      text-transform:uppercase; color:var(--muted2)}
+    table.dense{min-width:520px}
+    section.blk h2 .bmeta{margin-left:0; width:100%}
+  }
 </style>
 <style>:root{--pageaccent:var(--fitness)}</style></head><body><div class='wrap'>
 <div class="hero">
@@ -173,20 +589,71 @@
   <h1>Training<span class="dot">.</span></h1>
   <p class="sub">The two home sessions, top to bottom, built to read on a phone mid-workout.</p>
 </div>
+
+<style>.today .chip.l-lifting{--lc:var(--fitness)}.today .chip.l-cardio{--lc:#60a5fa}.today .chip.l-recovery{--lc:var(--recovery)}.today .chip.cond{border-top:2px dotted var(--rule)}.today .chip.cond>b::after{content:" • if"; color:var(--muted2); font-weight:600; font-size:11px; letter-spacing:.04em}</style>
+<section class="today" aria-label="Today">
+  <div class="thead">
+    <div class="eyebrow">Today <span id="todaydate"></span></div>
+    <div class="ttabs" role="tablist"><button type="button" role="tab" data-day="mon" aria-selected="false">Mon</button><button type="button" role="tab" data-day="tue" aria-selected="false">Tue</button><button type="button" role="tab" data-day="wed" aria-selected="false">Wed</button><button type="button" role="tab" data-day="thu" aria-selected="false">Thu</button><button type="button" role="tab" data-day="fri" aria-selected="false">Fri</button><button type="button" role="tab" data-day="sat" aria-selected="false">Sat</button><button type="button" role="tab" data-day="sun" aria-selected="false">Sun</button></div>
+  </div>
+  <div class="tday" role="tabpanel" data-day="mon" hidden><div class="tband"><div class="tslot"><b>Wake</b><span>6:00 am</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Cyclic sighing</b><span>5 min after the latte</span></a></div></div><div class="tband"><div class="tslot"><b>Morning</b><span>7:00 am</span></div><div class="tchips"><a class="chip l-lifting" href="squat-day.html"><b>Squat day</b><span>Mobility + neck, then the session</span></a><a class="chip l-recovery" href="not-published.html"><b>Walk</b><span>30–45 min with Badger</span></a></div></div><div class="tband"><div class="tslot"><b>Midday</b><span>11:30 am</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Red light + rehab</b><span>10 min: single-leg stance on the plate, tib raises, wrist eccentrics, band ER, heel drops</span></a></div></div><div class="tband"><div class="tslot"><b>Afternoon</b><span>3:00 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Sauna</b><span>20 min, done by 5 pm; weigh in and out</span></a><a class="chip l-recovery cond" href="not-published.html"><b>Aeir CO₂ + PEMF</b><span>If scheduled this week: 1–2×, after the heavy lift days</span></a></div></div><div class="tband"><div class="tslot"><b>Evening</b><span>6:00 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Walk</b><span>45–60 min, done by 8:30 pm. Under 6k steps at 4pm makes this mandatory</span></a><a class="chip l-recovery" href="not-published.html"><b>Ping pong</b></a></div></div><div class="tband"><div class="tslot"><b>Night</b><span>9:30 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Wind-down</b><span>HeartMath 5 min with the night block; lights out 9:45</span></a></div></div></div><div class="tday" role="tabpanel" data-day="tue" hidden><div class="tband"><div class="tslot"><b>Wake</b><span>6:00 am</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Cyclic sighing</b><span>5 min after the latte</span></a></div></div><div class="tband"><div class="tslot"><b>Morning</b><span>7:00 am</span></div><div class="tchips"><a class="chip l-cardio" href="not-published.html"><b>Norway 4×4</b><span>Four intervals at the top of the aerobic range</span></a><a class="chip l-recovery" href="not-published.html"><b>Walk</b><span>30–45 min with Badger</span></a></div></div><div class="tband"><div class="tslot"><b>Afternoon</b><span>3:00 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Sauna + cold plunge</b><span>Sauna 20 min, plunge 3–5 min; done by 5 pm</span></a></div></div><div class="tband"><div class="tslot"><b>Evening</b><span>6:00 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Walk</b><span>45–60 min, done by 8:30 pm. Under 6k steps at 4pm makes this mandatory</span></a><a class="chip l-recovery" href="not-published.html"><b>Golf</b></a></div></div><div class="tband"><div class="tslot"><b>Night</b><span>9:30 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Wind-down</b><span>HeartMath 5 min with the night block; lights out 9:45</span></a></div></div></div><div class="tday" role="tabpanel" data-day="wed" hidden><div class="tband"><div class="tslot"><b>Wake</b><span>6:00 am</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Cyclic sighing</b><span>5 min after the latte</span></a></div></div><div class="tband"><div class="tslot"><b>Morning</b><span>7:00 am</span></div><div class="tchips"><a class="chip l-lifting" href="fitness.html"><b>Discover Strength</b><span>Coach-led — not in this plan</span></a><a class="chip l-recovery" href="not-published.html"><b>Walk</b><span>30–45 min with Badger</span></a></div></div><div class="tband"><div class="tslot"><b>Midday</b><span>11:30 am</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Red light + rehab</b><span>10 min, same block</span></a></div></div><div class="tband"><div class="tslot"><b>Afternoon</b><span>3:00 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Sauna</b><span>20 min, done by 5 pm; weigh in and out</span></a></div></div><div class="tband"><div class="tslot"><b>Evening</b><span>6:00 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Walk</b><span>45–60 min, done by 8:30 pm. Under 6k steps at 4pm makes this mandatory</span></a><a class="chip l-recovery" href="not-published.html"><b>Skate</b></a></div></div><div class="tband"><div class="tslot"><b>Night</b><span>9:30 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Wind-down</b><span>HeartMath 5 min with the night block; lights out 9:45</span></a></div></div></div><div class="tday" role="tabpanel" data-day="thu" hidden><div class="tband"><div class="tslot"><b>Wake</b><span>6:00 am</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Cyclic sighing</b><span>5 min after the latte</span></a></div></div><div class="tband"><div class="tslot"><b>Morning</b><span>7:00 am</span></div><div class="tchips"><a class="chip l-cardio" href="not-published.html"><b>Pickleball</b><span>Informal — the day off from structured work</span></a><a class="chip l-recovery" href="not-published.html"><b>Walk</b><span>30–45 min with Badger</span></a></div></div><div class="tband"><div class="tslot"><b>Evening</b><span>6:00 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Walk</b><span>45–60 min, done by 8:30 pm. Under 6k steps at 4pm makes this mandatory</span></a><a class="chip l-recovery" href="not-published.html"><b>Surf or socialise</b></a></div></div><div class="tband"><div class="tslot"><b>Night</b><span>9:30 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Wind-down</b><span>HeartMath 5 min with the night block; lights out 9:45</span></a></div></div></div><div class="tday" role="tabpanel" data-day="fri" hidden><div class="tband"><div class="tslot"><b>Wake</b><span>6:00 am</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Cyclic sighing</b><span>5 min after the latte</span></a></div></div><div class="tband"><div class="tslot"><b>Morning</b><span>7:00 am</span></div><div class="tchips"><a class="chip l-cardio cond" href="not-published.html"><b>Zone 2 ride</b><span>45–60 min at 150–175 W, conversational. Golf morning? Ride later, or skip — never a 4×4</span></a><a class="chip l-recovery" href="not-published.html"><b>Walk</b><span>30–45 min with Badger</span></a></div></div><div class="tband"><div class="tslot"><b>Midday</b><span>11:30 am</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Red light + rehab</b><span>10 min, same block</span></a></div></div><div class="tband"><div class="tslot"><b>Afternoon</b><span>3:00 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Sauna + cold plunge</b><span>Sauna 20 min, plunge 3–5 min; done by 5 pm</span></a></div></div><div class="tband"><div class="tslot"><b>Evening</b><span>6:00 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Walk</b><span>45–60 min, done by 8:30 pm. Under 6k steps at 4pm makes this mandatory</span></a><a class="chip l-recovery" href="not-published.html"><b>Golf</b></a></div></div><div class="tband"><div class="tslot"><b>Night</b><span>9:30 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Wind-down</b><span>HeartMath 5 min with the night block; lights out 9:45</span></a></div></div></div><div class="tday" role="tabpanel" data-day="sat" hidden><div class="tband"><div class="tslot"><b>Wake</b><span>6:00 am</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Cyclic sighing</b><span>5 min after the latte</span></a></div></div><div class="tband"><div class="tslot"><b>Morning</b><span>7:00 am</span></div><div class="tchips"><a class="chip l-lifting" href="deadlift-day.html"><b>Deadlift day</b><span>Mobility + neck, then the session</span></a><a class="chip l-recovery" href="not-published.html"><b>Walk</b><span>30–45 min with Badger</span></a></div></div><div class="tband"><div class="tslot"><b>Afternoon</b><span>3:00 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Sauna</b><span>20 min, done by 5 pm; weigh in and out</span></a><a class="chip l-recovery cond" href="not-published.html"><b>Aeir CO₂ + PEMF</b><span>If scheduled this week</span></a></div></div><div class="tband"><div class="tslot"><b>Evening</b><span>6:00 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Walk</b><span>45–60 min, done by 8:30 pm. Under 6k steps at 4pm makes this mandatory</span></a><a class="chip l-recovery" href="not-published.html"><b>Paddleboard</b></a></div></div><div class="tband"><div class="tslot"><b>Night</b><span>9:30 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Wind-down</b><span>HeartMath 5 min with the night block; lights out 9:45</span></a></div></div></div><div class="tday" role="tabpanel" data-day="sun" hidden><div class="tband"><div class="tslot"><b>Wake</b><span>6:00 am</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Cyclic sighing</b><span>5 min after the latte</span></a></div></div><div class="tband"><div class="tslot"><b>Morning</b><span>7:00 am</span></div><div class="tchips"><a class="chip l-cardio" href="not-published.html"><b>REHIT + zone 2</b><span>Three seated sprints, then 30 min easy on the same ride</span></a><a class="chip l-recovery" href="not-published.html"><b>Walk</b><span>30–45 min with Badger</span></a><a class="chip l-recovery" href="mobility.html"><b>Extended mobility</b><span>The long version — 19 min</span></a></div></div><div class="tband"><div class="tslot"><b>Afternoon</b><span>3:00 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Contrast therapy</b></a></div></div><div class="tband"><div class="tslot"><b>Evening</b><span>6:00 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Walk</b><span>45–60 min, done by 8:30 pm. Under 6k steps at 4pm makes this mandatory</span></a><a class="chip l-recovery" href="not-published.html"><b>Socialise</b></a></div></div><div class="tband"><div class="tslot"><b>Night</b><span>9:30 pm</span></div><div class="tchips"><a class="chip l-recovery" href="not-published.html"><b>Wind-down</b><span>HeartMath 5 min with the night block; lights out 9:45</span></a></div></div></div>
+  <p class="tfoot"><a href="week.html">The whole week &rarr;</a></p>
+</section>
+<script>
+(function(){
+  var ROOT=document.querySelector(".today");
+  if(!ROOT) return;
+  var KEYS=["sun","mon","tue","wed","thu","fri","sat"];
+  var now=new Date(), tk=KEYS[now.getDay()];
+  var NAMES={sun:"Sunday",mon:"Monday",tue:"Tuesday",wed:"Wednesday",thu:"Thursday",fri:"Friday",sat:"Saturday"};
+  var eyebrow=ROOT.querySelector(".eyebrow");
+  function show(k){
+    ROOT.querySelectorAll(".tday").forEach(function(p){ p.hidden=p.dataset.day!==k; });
+    if(eyebrow){
+      eyebrow.innerHTML = (k===tk) ? 'Today <span id="todaydate"></span>'
+        : NAMES[k]+' <span>· <a href="#" data-back="1">back to today</a></span>';
+      var l=eyebrow.querySelector("#todaydate");
+      if(l){ try{ l.textContent="· "+now.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"}); }catch(e){} }
+      var back=eyebrow.querySelector("[data-back]");
+      if(back) back.addEventListener("click", function(ev){ ev.preventDefault(); show(tk); });
+    }
+    ROOT.querySelectorAll("[role=tab]").forEach(function(b){
+      var on=b.dataset.day===k;
+      b.setAttribute("aria-selected", on?"true":"false");
+      b.classList.toggle("istoday", b.dataset.day===tk);
+    });
+  }
+  ROOT.querySelectorAll("[role=tab]").forEach(function(b){
+    b.addEventListener("click", function(){ show(b.dataset.day); });
+  });
+  show(tk);
+})();
+</script>
+
 <div class="grid">
   <a class="card" style="--c:var(--fitness)" href="squat-day.html">
     <div class="ic">🏋️</div><h3>Squat day</h3>
-    <p>82 min · 43 working sets · warm-up, power, squat, hinge, accessories, finisher.</p>
+    <p>85 min · 46 working sets · warm-up, power, squat, hinge, accessories, finisher.</p>
     <div class="go">Open →</div>
   </a>
   <a class="card" style="--c:#60a5fa" href="deadlift-day.html">
     <div class="ic">⚙️</div><h3>Deadlift day</h3>
-    <p>86 min · 54 working sets · warm-up, power, hinge, press, pull, accessories.</p>
+    <p>86 min · 50 working sets · warm-up, power, hinge, press, pull, accessories.</p>
+    <div class="go">Open →</div>
+  </a>
+  <a class="card" style="--c:var(--fitness)" href="travel.html">
+    <div class="ic">🧳</div><h3>Travel</h3>
+    <p>Tick what the hotel gym or the park has, pick the minutes, and the session assembles itself.</p>
+    <div class="go">Open →</div>
+  </a>
+  <a class="card" style="--c:#2dd4bf" href="week.html">
+    <div class="ic">🗓️</div><h3>The week</h3>
+    <p>Lifting, cardio and recovery on one grid — by day and time of day, with layers you can switch off.</p>
     <div class="go">Open →</div>
   </a>
   <a class="card" style="--c:var(--recovery)" href="fitness.html">
     <div class="ic">📅</div><h3>Weekly schedule</h3>
-    <p>How the 14-day rotation lays out — 6 lifts, cardio slots, mobility and neck work.</p>
+    <p>How the week lays out — 3 lifts, cardio slots, mobility and neck work.</p>
     <div class="go">Open →</div>
   </a>
   <a class="card" style="--c:#22d3ee" href="mobility.html">
@@ -198,14 +665,15 @@
 
 <div class="section" style="margin-top:22px">
   <h3 style="margin-top:0">Straight to a page</h3>
-  <p class="muted" style="margin:0; font-size:14.5px">
-    <a href="squat-day.html">Squat day</a> ·
-    <a href="deadlift-day.html">Deadlift day</a> ·
-    <a href="fitness.html">Weekly schedule</a> ·
-    <a href="mobility.html">Mobility &amp; neck</a> ·
+  <p class="quick">
+    <a href="squat-day.html">Squat day</a>
+    <a href="deadlift-day.html">Deadlift day</a>
+    <a href="week.html">The week</a>
+    <a href="fitness.html">Training index</a>
+    <a href="mobility.html">Mobility &amp; neck</a>
     <a href="training-plan/">Previous version (archive)</a>
   </p>
 </div>
 <p class="updated">Last updated July 2026. Rationale, load progressions and the rest of the
 system live in the full build, which is not published here.</p>
-<footer>Private hub · for personal use. Not medical advice — training, nutrition, and longevity content reflects personal planning under professional oversight.</footer></div></body></html>
+<footer>Personal hub · not medical advice. Reflects personal planning; consult your clinicians before changing anything.</footer></div></body></html>
